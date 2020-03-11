@@ -1,0 +1,35 @@
+import os
+import pandas as pd
+from sklearn.feature_extraction import text
+
+corpus=['this is sentence one','this is sentence two','this is sentence three']
+
+#Creating an instance of count vectorizer
+cv = text.CountVectorizer(corpus)
+
+#Convert to numeric form in a matrix(this method is used in topic modelling)
+matrix=cv.fit_transform(corpus)
+
+pd.DataFrame(matrix.toarray(),columns=cv.get_feature_names())
+
+cosine_similarity(matrix)
+
+tf = text.TfidfVectorizer(input=corpus,max_feature=2)
+matrix1=tf.fit_transform(corpus)
+pd.DataFrame(matrix1.toarray(),columns=tf.get_feature_names())
+
+corpus=['this is sentence one','modi is the prime minister of india','this is sentence too','modi knows yoga']
+
+tf1=text.TfidfVectorizer(corpus)
+matrix2=tf1.fit_transform(corpus)
+
+from sklearn.metrics.pairwise import cosine_similarity
+
+cosine_similarity(matrix2)
+
+os.chdir(r"C:\Users\DELL\Desktop\05 Feature Engineering for Unstructured Data\3. Count Vector Matrix, TF-IDF and PCA demo")
+
+data = pd.read_csv("reviews.csv")
+
+tf = text.TfidfVectorizer(data['review_detail'].tolist().stop_words='english')
+matrix=tf.fit_transform(data['review_detail'])
